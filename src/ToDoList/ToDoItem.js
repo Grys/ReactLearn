@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types'
+import Context from '../context'
 import './ToDoItem.css'
 
 function ToDoItem({ item, index, onChange }) {
+const {removeTodo} = useContext(Context)
+
     const classes = []
     if (item.completed)
         classes.push('done')
@@ -18,7 +21,10 @@ function ToDoItem({ item, index, onChange }) {
                     &nbsp;
                     {item.title}
                 </span>
-                <button className='rm'>&times;</button>
+                <button 
+                    className='rm'
+                    onClick={ removeTodo.bind(null, item.id) }>
+                    &times;</button>
 
             </li>
     );
