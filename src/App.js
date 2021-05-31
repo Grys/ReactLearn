@@ -1,5 +1,6 @@
 import React, {useEffect} from 'react'
 import ToDoList from './ToDoList/ToDoList'
+import Modal from './Modal/Modal'
 import Context from './context'
 
 const AddTodo = React.lazy(() => new Promise(resolve => {
@@ -51,6 +52,8 @@ function App() {
     <Context.Provider value={{removeTodo: removeTodo}}>
       <div className='wrapper'>
         <h1>ReactJS app</h1>
+
+        <Modal ></Modal>
         <React.Suspense fallback={<p>Loading...</p>}>
           <AddTodo onCreate={CreateTodo}/>
         </React.Suspense>
