@@ -1,5 +1,6 @@
 import React from 'react'
 import ToDoList from './ToDoList/ToDoList'
+import AddTodo from './ToDoList/AddTodo'
 import Context from './context'
 
 function App() {
@@ -24,11 +25,24 @@ function App() {
     setTodos(todos.filter(todo => todo.id !== id))
   }
 
+  function CreateTodo(title) {
+    setTodos(todos.concat([{
+      id: Date.now(),
+      title: title,
+      completed: false
+    }]))
+  }
+
   return (
     <Context.Provider value={{removeTodo: removeTodo}}>
       <div className='wrapper'>
         <h1>ReactJS app</h1>
-        { todos.length > 0 ? <ToDoList todos={todos} onToggle={toggleTodo} /> : <p>Empty TodoList</p> }
+        <AddTodo onCreate={CreateTodo}/>
+        { todos.length > 0 ? (
+            <ToDoList todos={todos} onToggle={toggleTodo} /> 
+          ):(
+            <p>Empty TodoList</p>
+          ) }
       </div>
     </Context.Provider>
   );
