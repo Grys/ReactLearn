@@ -1,7 +1,13 @@
 import React, {useEffect} from 'react'
 import ToDoList from './ToDoList/ToDoList'
-import AddTodo from './ToDoList/AddTodo'
 import Context from './context'
+
+const AddTodo = React.lazy(() => new Promise(resolve => {
+  // lazy loading sample (delay for show fallback in browser)
+  setTimeout(() => {
+    resolve(import('./ToDoList/AddTodo'))
+  }, 3000)
+}))
 
 function App() {
 
@@ -45,7 +51,10 @@ function App() {
     <Context.Provider value={{removeTodo: removeTodo}}>
       <div className='wrapper'>
         <h1>ReactJS app</h1>
-        <AddTodo onCreate={CreateTodo}/>
+        <React.Suspense fallback={<p>Loading...</p>}>
+          <AddTodo onCreate={CreateTodo}/>
+        </React.Suspense>
+        
         { todos.length > 0 ? (
             <ToDoList todos={todos} onToggle={toggleTodo} /> 
           ):(
